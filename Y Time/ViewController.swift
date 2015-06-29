@@ -8,20 +8,29 @@
 
 import UIKit
 import CoreData
-class ViewController: UIViewController, UIWebViewDelegate {
+class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate {
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var weeklyTimeLabel: UILabel!
     @IBOutlet weak var periodTimeLabel: UILabel!
+    @IBOutlet weak var timeTravelSlider: MWTimeTravel!
+    @IBOutlet weak var clockInButton: UIButton!
+    @IBOutlet weak var clockOutButton: UIButton!
     let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
     var loginScreen: LoginView?
     var webView: UIWebView?
     var previousURL: String?
     var currentUser: NSManagedObject?
+    var weeklyTime: Float = 0.0
+    var periodTime: Float = 0.0
     var username = ""
     var password = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        //Set Up
+        self.timeTravelSlider.delegate = self
+        self.clockInButton.layer.cornerRadius = 8.0
+        self.clockOutButton.layer.cornerRadius = 8.0
         
         let request = NSFetchRequest(entityName: "User")
         do {
@@ -136,8 +145,16 @@ class ViewController: UIViewController, UIWebViewDelegate {
             let weeklyHoursValue = webView.stringByEvaluatingJavaScriptFromString(weeklyJS)
             let periodHoursValue = webView.stringByEvaluatingJavaScriptFromString(periodJS)
             self.weeklyTimeLabel.text = weeklyHoursValue
+            self.weeklyTime = weeklyHoursValue!.convertToFloat()
             self.periodTimeLabel.text = periodHoursValue
+            self.periodTime = periodHoursValue!.convertToFloat()
             self.navBar.topItem?.title = webView.stringByEvaluatingJavaScriptFromString(jobTitleJS)!
+            
+            if jobTitleJS.lowercaseString.rangeOfString("mtc") == nil {
+                self.clockInButton.enabled = false
+                self.clockOutButton.enabled = false
+            }
+            
             self.loginSuccessful()
             return
         }
@@ -156,6 +173,16 @@ class ViewController: UIViewController, UIWebViewDelegate {
     
     @IBAction func reloadData(sender: AnyObject) {
         self.webView?.reload()
+        self.timeTravelSlider.resetSlider()
+        Netwo
+    }
+    
+    func timeDidTravel(timeChange: Float) {
+        self.weeklyTime += timeChange
+        self.periodTime += timeChange
+        
+        self.weeklyTimeLabel.text = String().convertToString(self.weeklyTime)
+        self.periodTimeLabel.text = String().convertToString(self.periodTime)
     }
 
 }

@@ -16,6 +16,9 @@
 		593748571B3B7CFC0019595D /* Y_TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593748561B3B7CFC0019595D /* Y_TimeTests.swift */; };
 		593748611B3CD4560019595D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593748601B3CD4560019595D /* LoginView.swift */; };
 		593748631B3CD4CF0019595D /* UIConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593748621B3CD4CF0019595D /* UIConstraints.swift */; };
+		5943F4AB1B41D06B006D530C /* MWTimeTravel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943F4AA1B41D06B006D530C /* MWTimeTravel.swift */; };
+		5943F4AD1B41DF41006D530C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943F4AC1B41DF41006D530C /* String+Extension.swift */; };
+		5943F4AF1B41F87C006D530C /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5943F4AE1B41F87C006D530C /* Reachability.swift */; };
 		5999DE5F1B3E11EE00D162AB /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999DE5D1B3E11EE00D162AB /* User+CoreDataProperties.swift */; };
 		5999DE601B3E11EE00D162AB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5999DE5E1B3E11EE00D162AB /* User.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +47,9 @@
 		593748561B3B7CFC0019595D /* Y_TimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Y_TimeTests.swift; sourceTree = "<group>"; };
 		593748601B3CD4560019595D /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		593748621B3CD4CF0019595D /* UIConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIConstraints.swift; sourceTree = "<group>"; };
+		5943F4AA1B41D06B006D530C /* MWTimeTravel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWTimeTravel.swift; sourceTree = "<group>"; };
+		5943F4AC1B41DF41006D530C /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		5943F4AE1B41F87C006D530C /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		5999DE5D1B3E11EE00D162AB /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "../User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5999DE5E1B3E11EE00D162AB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +99,9 @@
 				593748621B3CD4CF0019595D /* UIConstraints.swift */,
 				5999DE5D1B3E11EE00D162AB /* User+CoreDataProperties.swift */,
 				5999DE5E1B3E11EE00D162AB /* User.swift */,
+				5943F4AA1B41D06B006D530C /* MWTimeTravel.swift */,
+				5943F4AE1B41F87C006D530C /* Reachability.swift */,
+				5943F4AC1B41DF41006D530C /* String+Extension.swift */,
 				593748441B3B7CFC0019595D /* Main.storyboard */,
 				593748471B3B7CFC0019595D /* Images.xcassets */,
 				593748491B3B7CFC0019595D /* LaunchScreen.xib */,
@@ -229,11 +238,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				593748431B3B7CFC0019595D /* ViewController.swift in Sources */,
+				5943F4AD1B41DF41006D530C /* String+Extension.swift in Sources */,
 				593748411B3B7CFC0019595D /* Y_Time.xcdatamodeld in Sources */,
+				5943F4AB1B41D06B006D530C /* MWTimeTravel.swift in Sources */,
 				5999DE5F1B3E11EE00D162AB /* User+CoreDataProperties.swift in Sources */,
 				593748611B3CD4560019595D /* LoginView.swift in Sources */,
 				593748631B3CD4CF0019595D /* UIConstraints.swift in Sources */,
 				5937483E1B3B7CFC0019595D /* AppDelegate.swift in Sources */,
+				5943F4AF1B41F87C006D530C /* Reachability.swift in Sources */,
 				5999DE601B3E11EE00D162AB /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
