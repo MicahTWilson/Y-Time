@@ -24,6 +24,11 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
     var periodTime: Float = 0.0
     var username = ""
     var password = ""
+    var weeklyTimeLoaded: Float = 0.0
+    var periodTimeLoaded: Float = 0.0
+    var weeklyTimeString: String?
+    var periodTimeString: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -146,8 +151,12 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
             let periodHoursValue = webView.stringByEvaluatingJavaScriptFromString(periodJS)
             self.weeklyTimeLabel.text = weeklyHoursValue
             self.weeklyTime = weeklyHoursValue!.convertToFloat()
+            self.weeklyTimeLoaded = weeklyHoursValue!.convertToFloat()
+            self.weeklyTimeString = weeklyHoursValue
             self.periodTimeLabel.text = periodHoursValue
             self.periodTime = periodHoursValue!.convertToFloat()
+            self.periodTimeLoaded = periodHoursValue!.convertToFloat()
+            self.periodTimeString = periodHoursValue
             self.navBar.topItem?.title = webView.stringByEvaluatingJavaScriptFromString(jobTitleJS)!
             
             if jobTitleJS.lowercaseString.rangeOfString("mtc") == nil {
@@ -174,7 +183,6 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
     @IBAction func reloadData(sender: AnyObject) {
         self.webView?.reload()
         self.timeTravelSlider.resetSlider()
-        Netwo
     }
     
     func timeDidTravel(timeChange: Float) {
@@ -185,5 +193,12 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
         self.periodTimeLabel.text = String().convertToString(self.periodTime)
     }
 
+    func timeDidFinishTraveling() {
+        self.weeklyTimeLabel.text = self.weeklyTimeString
+        self.periodTimeLabel.text = self.periodTimeString
+        self.weeklyTime = self.weeklyTimeLoaded
+        self.periodTime = self.periodTimeLoaded
+    }
+    
 }
 

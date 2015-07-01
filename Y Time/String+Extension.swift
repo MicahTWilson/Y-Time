@@ -10,16 +10,23 @@ import Foundation
 
 extension String {
     func convertToFloat() -> Float {
-        var newString = ""
-        for char in self.characters {
-            if char == ":" {
-                newString += "."
+        
+        let range = self.rangeOfString(":")
+        let hour = self.substringToIndex(range!.startIndex)
+        let minutes = "0." + self.substringFromIndex(range!.endIndex)
+        
+        let floatValueForMinutes = "\(((NSString(string: minutes).floatValue / 60.0) * 100))"
+        let rangeForMinutes = floatValueForMinutes.rangeOfString(".")!
+        
+        var finalMinuteString = ""
+        for (index, char) in (floatValueForMinutes.substringFromIndex(rangeForMinutes.endIndex)).characters.enumerate() {
+            if index == 2 {
+                break
             } else {
-                newString.append(char)
+                finalMinuteString.append(char)
             }
         }
-        
-        return NSString(string: newString).floatValue
+        return NSString(string: (hour + "." +  finalMinuteString)).floatValue
     }
     
     
