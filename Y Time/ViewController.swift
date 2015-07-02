@@ -12,10 +12,13 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var weeklyTimeLabel: UILabel!
     @IBOutlet weak var periodTimeLabel: UILabel!
+    @IBOutlet weak var clockedInLabel: UILabel!
     @IBOutlet weak var timeTravelSlider: MWTimeTravel!
     @IBOutlet weak var clockInButton: UIButton!
     @IBOutlet weak var clockOutButton: UIButton!
     let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
+    let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+    let settingsView = SettingsView()
     var loginScreen: LoginView?
     var webView: UIWebView?
     var previousURL: String?
@@ -28,6 +31,7 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
     var periodTimeLoaded: Float = 0.0
     var weeklyTimeString: String?
     var periodTimeString: String?
+    var clockedIn = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +40,10 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
         self.timeTravelSlider.delegate = self
         self.clockInButton.layer.cornerRadius = 8.0
         self.clockOutButton.layer.cornerRadius = 8.0
+        self.clockedInLabel.layer.cornerRadius = 6.0
+        self.clockedInLabel.clipsToBounds = true
         
+        //Get user if exists
         let request = NSFetchRequest(entityName: "User")
         do {
             try
@@ -57,6 +64,13 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
             self.view.addSubview(self.loginScreen!)
             self.loginScreen?.usernameField.becomeFirstResponder()
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        //Set Up Settings view and folder action
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closeFolder:"))
+        self.settingsView.frame = CGRectMake(0, self.view.frame.height, self.view.frame.width, self.view.frame.height/2.2)
+        self.appDel.window?.addSubview(settingsView)
     }
     
     func submitLoginForm(sender: UIButton) {
@@ -198,6 +212,20 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
         self.periodTimeLabel.text = self.periodTimeString
         self.weeklyTime = self.weeklyTimeLoaded
         self.periodTime = self.periodTimeLoaded
+    }
+    
+    @IBAction func openFolder(sender: UITabBarItem) {
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 3, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.view.transform = CGAffineTransformMakeScale(0.8, 0.8)
+            self.settingsView.transform = CGAffineTransformMakeTranslation(0, -self.view.frame.height/2.2)
+            }, completion: nil)
+    }
+    
+    func closeFolder(sender: UITapGestureRecognizer) {
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 3, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            self.settingsView.transform = CGAffineTransformMakeTranslation(0, 0)
+            }, completion: nil)
     }
     
 }
