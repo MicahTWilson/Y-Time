@@ -10,11 +10,16 @@ import Foundation
 import UIKit
 
 class YTimeView: UIView {
-    
-    override func drawLayer(layer: CALayer, inContext ctx: CGContext) {
-        let logRect = CGRectMake(40, 50, 15, 15)
+    var clockedIn = false
+    override func drawRect(rect: CGRect) {
+        let logRect = CGRectMake(95, 620, 15, 15)
         let path = UIBezierPath(ovalInRect: logRect)
-        UIColor.greenColor().setFill()
+        if clockedIn {
+            UIColor.greenColor().setFill()
+        } else {
+            UIColor.redColor().setFill()
+        }
         path.fill()
     }
+
 }

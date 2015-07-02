@@ -19,6 +19,7 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
     let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
     let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
     let settingsView = SettingsView()
+    var clockedIn = false
     var loginScreen: LoginView?
     var webView: UIWebView?
     var previousURL: String?
@@ -31,7 +32,6 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
     var periodTimeLoaded: Float = 0.0
     var weeklyTimeString: String?
     var periodTimeString: String?
-    var clockedIn = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,9 +40,7 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
         self.timeTravelSlider.delegate = self
         self.clockInButton.layer.cornerRadius = 8.0
         self.clockOutButton.layer.cornerRadius = 8.0
-        self.clockedInLabel.layer.cornerRadius = 6.0
-        self.clockedInLabel.clipsToBounds = true
-        
+ 
         //Get user if exists
         let request = NSFetchRequest(entityName: "User")
         do {
@@ -161,6 +159,7 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
             let weeklyJS = "document.getElementById('Y_TL_WRK_Y_TL_W_TOTAL_M').value"
             let periodJS = "document.getElementById('Y_TL_WRK_Y_TL_P_TOTAL_M').value"
             let jobTitleJS = "document.getElementsByClassName('PSHYPERLINK')[3].innerHTML"
+            let clockedInJS = "document.getElementById('Y_TL_WRK_STATUS$0').innerHTML"
             let weeklyHoursValue = webView.stringByEvaluatingJavaScriptFromString(weeklyJS)
             let periodHoursValue = webView.stringByEvaluatingJavaScriptFromString(periodJS)
             self.weeklyTimeLabel.text = weeklyHoursValue
@@ -173,7 +172,17 @@ class ViewController: UIViewController, UIWebViewDelegate, MWTimeTravelDelegate 
             self.periodTimeString = periodHoursValue
             self.navBar.topItem?.title = webView.stringByEvaluatingJavaScriptFromString(jobTitleJS)!
             
-            if jobTitleJS.lowercaseString.rangeOfString("mtc") == nil {
+            if webView.stringByEvaluatingJavaScriptFromString(clockedInJS)!.lowercaseString.rangeOfString("in") == nil {
+                self.clockedIn = false
+                (self.view as! YTimeView).clockedIn = self.clockedIn
+                self.view.setNeedsDisplay()
+            } else {
+                self.clockedIn = true
+                (self.view as! YTimeView).clockedIn = self.clockedIn
+                self.view.setNeedsDisplay()
+            }
+            
+            if webView.stringByEvaluatingJavaScriptFromString(jobTitleJS)!.lowercaseString.rangeOfString("mtc") != nil {
                 self.clockInButton.enabled = false
                 self.clockOutButton.enabled = false
             }
